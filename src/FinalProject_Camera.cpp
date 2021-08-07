@@ -227,7 +227,7 @@ int main(int argc, const char *argv[])
             (dataBuffer.end() - 1)->kptMatches = matches;
 
             // visualize matches between current and previous image
-            bVis = true;
+            bVis = false;
             if (bVis) {
                 cv::Mat matchImg = (dataBuffer.end() - 1)->cameraImg.clone();
                 cv::drawMatches((dataBuffer.end() - 2)->cameraImg,
@@ -309,7 +309,7 @@ int main(int argc, const char *argv[])
                         ++N;
                     }
 
-                    bVis = true;
+                    bVis = false;
                     if (bVis)
                     {
                         //cv::Mat visImg = (dataBuffer.end() - 1)->cameraImg.clone();
