@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WRITEUP.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///home/anhnv/Apps/markdown.css" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="project-report">Project report</h1>
+<h2 id="fp1--match-3d-objects">FP.1 : Match 3D Objects</h2>
+<p>In this task, please implement the method &quot;matchBoundingBoxes&quot;, which takes as input both the previous and the current data frames and provides as output the ids of the matched regions of interest (i.e. the boxID property)“. Matches must be the ones with the highest number of keypoint correspondences.</p>
+<p>=&gt; In <code>matchBoundingBoxes()</code> function, used multimap data structure to create a matching list of previous and current bounding boxes. After that, for each of current boxes, we count the number of matches to each previous box and select the previous box with the largest number of keypoint matches.</p>
+<h2 id="fp2--compute-lidar-based-ttc">FP.2 : Compute Lidar-based TTC</h2>
+<p>In this part of the final project, your task is to compute the time-to-collision for all matched 3D objects based on Lidar measurements alone. Please take a look at the &quot;Lesson 3: Engineering a Collision Detection System&quot; of this course to revisit the theory behind TTC estimation. Also, please implement the estimation in a way that makes it robust against outliers which might be way too close and thus lead to faulty estimates of the TTC. Please return your TCC to the main function at the end of computeTTCLidar.</p>
+<p>=&gt; First, I estimate lane width (4.0) and select all x values of the lidar points on the same lane with vehicle. That will help eliminate outliers by y axis. Using k = 10 LiDAR points that are nearest from vehicle, I calculate mean X values of previous frame and current frame. After that, I use following equations to calculate the TTC:</p>
+<pre class="hljs"><code><div>double dT = 1.0 / frameRate; // 1 frame time
+double dX = prevXMean - currXMean; // X displacement
+double v = dX / dT; // 1 frame velocity
+TTC = currXMean / v;
+</div></code></pre>
+<p>Mean calculation here is used as a statistically robust way to avoid severe estimation errors.</p>
+<h2 id="fp3--associate-keypoint-correspondences-with-bounding-boxes">FP.3 : Associate Keypoint Correspondences with Bounding Boxes</h2>
+<p>Before a TTC estimate can be computed in the next exercise, you need to find all keypoint matches that belong to each 3D object. You can do this by simply checking whether the corresponding keypoints are within the region of interest in the camera image. All matches which satisfy this condition should be added to a vector. The problem you will find is that there will be outliers among your matches. To eliminate those, I recommend that you compute a robust mean of all the euclidean distances between keypoint matches and then remove those that are too far away from the mean.</p>
+<p>=&gt; Function <code>clusterKptMatchesWithROI()</code> is implemented for this task. I calculate the mean distance for all matches and create kptMatches_roi as the list of all matches in current bounding box. After that, boundingBox.kptMatches is the filtered list of all matches in kptMatches_roi where the distance &lt; 0.8 * distMean (mean distance) to eliminate outliers.</p>
+<h2 id="fp4--compute-camera-based-ttc">FP.4 : Compute Camera-based TTC</h2>
+<p>Once keypoint matches have been added to the bounding boxes, the next step is to compute the TTC estimate. As with Lidar, we already looked into this in the second lesson of this course, so you please revisit the respective section and use the code sample there as a starting point for this task here. Once you have your estimate of the TTC, please return it to the main function at the end of computeTTCCamera.</p>
+<p><img src="images/pinhole.jpg" alt=""></p>
+<p>=&gt; I derived the equation to calculate camera-based TTC based on pin hole camera model in the above image. In the implementation, I calculate the change in the distance between each keypoint pair. After that, I use the median of distance ratio to calculate TTC based on above equations.</p>
+<h2 id="fp5--performance-evaluation-1">FP.5 : Performance Evaluation 1</h2>
+<p>This exercise is about conducting tests with the final project code, especially with regard to the Lidar part. Look for several examples where you have the impression that the Lidar-based TTC estimate is way off. Once you have found those, describe your observations and provide a sound argumentation why you think this happened.</p>
+<p>=&gt; The distances measured by the lidar are good. I also applied cropping and mean calculation to reduce the bad effect of outliers. Therefore, the distance between our vehicle and the forward car is calculated quite accurately. However, because the box displacement between 2 continuous frames is often small, the relative velocity estimation using that displacement is not very accurate. That's the reason why the TTC is very sensitive to noise and sometimes it is estimated inaccurately.</p>
+<p><img src="images/distance-measurement.png" alt="Distance measurement using LiDAR"></p>
+<p><img src="images/lidar-failed-ttc-1.png" alt="Lidar-based TTC failed"></p>
+<h2 id="fp6--performance-evaluation-2">FP.6 : Performance Evaluation 2</h2>
+<p>This last exercise is about running the different detector / descriptor combinations and looking at the differences in TTC estimation. Find out which methods perform best and also include several examples where camera-based TTC estimation is way off. As with Lidar, describe your observations again and also look into potential reasons. This is the last task in the final project.</p>
+<p><strong>Mean Absolute Error Table - Generated by gen_report.py</strong></p>
+<table>
+<thead>
+<tr>
+<th>Detector + Descriptor</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>Mean Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHITOMASI+BRISK</td>
+<td>X</td>
+<td>0.540658</td>
+<td>2.26843</td>
+<td>4.22618</td>
+<td>2.32028</td>
+<td>0.0347968</td>
+<td>5.77721</td>
+<td>22.2508</td>
+<td>8.95346</td>
+<td>0.723529</td>
+<td>6.04457</td>
+<td>1.91416</td>
+<td>0.0712174</td>
+<td>3.53174</td>
+<td>1.29055</td>
+<td>2.59627</td>
+<td>1.19441</td>
+<td>2.28695</td>
+<td>1.61613</td>
+<td>3.75785</td>
+</tr>
+<tr>
+<td><strong>SHITOMASI+BRIEF</strong></td>
+<td>X</td>
+<td>1.73908</td>
+<td>2.76776</td>
+<td>7.90119</td>
+<td>1.26232</td>
+<td>1.60463</td>
+<td>3.20485</td>
+<td>1.99139</td>
+<td>8.16421</td>
+<td>1.02734</td>
+<td>2.93526</td>
+<td>1.17207</td>
+<td>0.744356</td>
+<td>3.17552</td>
+<td>0.345801</td>
+<td>4.86114</td>
+<td>2.22225</td>
+<td>0.407913</td>
+<td>1.07595</td>
+<td><strong>2.58906</strong></td>
+</tr>
+<tr>
+<td>SHITOMASI+ORB</td>
+<td>X</td>
+<td>0.721687</td>
+<td>3.0345</td>
+<td>9.4251</td>
+<td>1.08868</td>
+<td>0.686537</td>
+<td>5.02326</td>
+<td>18.7183</td>
+<td>7.06734</td>
+<td>1.06276</td>
+<td>3.2817</td>
+<td>1.30774</td>
+<td>0.402065</td>
+<td>3.48165</td>
+<td>0.31947</td>
+<td>0.735634</td>
+<td>47.5376</td>
+<td>0.926317</td>
+<td>1.73761</td>
+<td>5.91988</td>
+</tr>
+<tr>
+<td>SHITOMASI+FREAK</td>
+<td>X</td>
+<td>0.297991</td>
+<td>0.136145</td>
+<td>3.46479</td>
+<td>1.62693</td>
+<td>0.656182</td>
+<td>6.00969</td>
+<td>12.872</td>
+<td>5.83686</td>
+<td>1.5302</td>
+<td>2.00424</td>
+<td>0.867834</td>
+<td>1.61156</td>
+<td>3.50425</td>
+<td>0.369614</td>
+<td>7.47906</td>
+<td>2.52423</td>
+<td>0.730459</td>
+<td>4.51762</td>
+<td>3.11331</td>
+</tr>
+<tr>
+<td>SHITOMASI+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>SHITOMASI+SIFT</td>
+<td>X</td>
+<td>1.0193</td>
+<td>0.785083</td>
+<td>6.64106</td>
+<td>0.465613</td>
+<td>1.42891</td>
+<td>4.96123</td>
+<td>20.0266</td>
+<td>7.73138</td>
+<td>0.861888</td>
+<td>2.12138</td>
+<td>1.72659</td>
+<td>0.556947</td>
+<td>3.7974</td>
+<td>0.0507515</td>
+<td>2.41161</td>
+<td>1.92111</td>
+<td>1.38037</td>
+<td>0.615927</td>
+<td>3.25017</td>
+</tr>
+<tr>
+<td>HARRIS+BRISK</td>
+<td>X</td>
+<td>0.239117</td>
+<td>2.96042</td>
+<td>4.69894</td>
+<td>1.26232</td>
+<td>13.7411</td>
+<td>X</td>
+<td>21.0885</td>
+<td>9.32444</td>
+<td>1.95518</td>
+<td>1.87971</td>
+<td>14.46</td>
+<td>2.41051</td>
+<td>159.793</td>
+<td>1.10331</td>
+<td>3.62522</td>
+<td>4.16617</td>
+<td>0.659533</td>
+<td>X</td>
+<td>15.2105</td>
+</tr>
+<tr>
+<td>HARRIS+BRIEF</td>
+<td>X</td>
+<td>3.11758</td>
+<td>4.19653</td>
+<td>0.888103</td>
+<td>0.276089</td>
+<td>0.506772</td>
+<td>X</td>
+<td>20.1765</td>
+<td>6.48872</td>
+<td>0.529725</td>
+<td>4.09662</td>
+<td>1.71063</td>
+<td>1.20713</td>
+<td>2.13083</td>
+<td>0.56063</td>
+<td>5.08496</td>
+<td>3.01184</td>
+<td>2.3293</td>
+<td>0.338921</td>
+<td>3.33241</td>
+</tr>
+<tr>
+<td>HARRIS+ORB</td>
+<td>X</td>
+<td>93.2962</td>
+<td>545.299</td>
+<td>28.7964</td>
+<td>1.09139</td>
+<td>17.8504</td>
+<td>5.07086</td>
+<td>21.4531</td>
+<td>7.87365</td>
+<td>0.943857</td>
+<td>3.29979</td>
+<td>2.93187</td>
+<td>1.52067</td>
+<td>50.4718</td>
+<td>23.1243</td>
+<td>3.48626</td>
+<td>X</td>
+<td>2.9873</td>
+<td>2.17695</td>
+<td>47.7455</td>
+</tr>
+<tr>
+<td>HARRIS+FREAK</td>
+<td>X</td>
+<td>2.00947</td>
+<td>13.9918</td>
+<td>20.826</td>
+<td>2.69405</td>
+<td>1.62647</td>
+<td>8.11603</td>
+<td>20.4017</td>
+<td>6.83096</td>
+<td>0.614703</td>
+<td>16.2067</td>
+<td>1.78667</td>
+<td>3.66784</td>
+<td>2.32492</td>
+<td>3.47638</td>
+<td>4.60746</td>
+<td>2.42831</td>
+<td>0.753994</td>
+<td>0.353994</td>
+<td>6.26208</td>
+</tr>
+<tr>
+<td>HARRIS+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>HARRIS+SIFT</td>
+<td>X</td>
+<td>2.52483</td>
+<td>0.129735</td>
+<td>7.16767</td>
+<td>1.05857</td>
+<td>3.35055</td>
+<td>7.52522</td>
+<td>20.8666</td>
+<td>7.20359</td>
+<td>1.05729</td>
+<td>2.31379</td>
+<td>0.596625</td>
+<td>2.36258</td>
+<td>3.56393</td>
+<td>1.0962</td>
+<td>3.72805</td>
+<td>2.11021</td>
+<td>3.77937</td>
+<td>3.63855</td>
+<td>4.11519</td>
+</tr>
+<tr>
+<td>FAST+BRISK</td>
+<td>X</td>
+<td>0.642061</td>
+<td>1.1772</td>
+<td>6.39656</td>
+<td>0.373965</td>
+<td>1.17761</td>
+<td>5.35221</td>
+<td>19.5059</td>
+<td>8.01213</td>
+<td>0.262632</td>
+<td>4.06462</td>
+<td>3.25045</td>
+<td>2.3816</td>
+<td>4.25432</td>
+<td>1.40033</td>
+<td>4.88515</td>
+<td>4.46293</td>
+<td>2.44318</td>
+<td>2.57237</td>
+<td>4.03418</td>
+</tr>
+<tr>
+<td>FAST+BRIEF</td>
+<td>X</td>
+<td>5.39155</td>
+<td>4.42332</td>
+<td>5.66067</td>
+<td>3.37824</td>
+<td>0.312559</td>
+<td>4.66138</td>
+<td>22.6586</td>
+<td>7.51384</td>
+<td>0.0564643</td>
+<td>2.92258</td>
+<td>2.72912</td>
+<td>0.251493</td>
+<td>3.47948</td>
+<td>1.11134</td>
+<td>2.9737</td>
+<td>1.82864</td>
+<td>1.77937</td>
+<td>1.03855</td>
+<td>4.00949</td>
+</tr>
+<tr>
+<td>FAST+ORB</td>
+<td>X</td>
+<td>2.7569</td>
+<td>6.27994</td>
+<td>5.38286</td>
+<td>0.442115</td>
+<td>16.4021</td>
+<td>X</td>
+<td>20.9833</td>
+<td>7.70179</td>
+<td>0.790187</td>
+<td>3.12779</td>
+<td>20.3964</td>
+<td>64.4555</td>
+<td>4.49637</td>
+<td>1.03136</td>
+<td>1.92204</td>
+<td>4.80253</td>
+<td>2.88257</td>
+<td>2.0989</td>
+<td>9.76192</td>
+</tr>
+<tr>
+<td>FAST+FREAK</td>
+<td>X</td>
+<td>0.0786355</td>
+<td>0.0331274</td>
+<td>1.8772</td>
+<td>X</td>
+<td>X</td>
+<td>4.2458</td>
+<td>21.3715</td>
+<td>7.05152</td>
+<td>1.20954</td>
+<td>1.67861</td>
+<td>3.96524</td>
+<td>2.93608</td>
+<td>3.58639</td>
+<td>2.51099</td>
+<td>1.47918</td>
+<td>3.2999</td>
+<td>2.56082</td>
+<td>2.12891</td>
+<td>3.75084</td>
+</tr>
+<tr>
+<td>FAST+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>FAST+SIFT</td>
+<td>X</td>
+<td>2.03677</td>
+<td>0.660803</td>
+<td>5.43502</td>
+<td>1.848</td>
+<td>0.290657</td>
+<td>4.64215</td>
+<td>21.1044</td>
+<td>7.36874</td>
+<td>1.05193</td>
+<td>1.32714</td>
+<td>2.93187</td>
+<td>1.31772</td>
+<td>3.83754</td>
+<td>0.478159</td>
+<td>2.41193</td>
+<td>3.06687</td>
+<td>0.970548</td>
+<td>2.09381</td>
+<td>3.493</td>
+</tr>
+<tr>
+<td>BRISK+BRISK</td>
+<td>X</td>
+<td>9.27749</td>
+<td>11.0711</td>
+<td>5.72655</td>
+<td>0.950088</td>
+<td>5.46383</td>
+<td>8.36642</td>
+<td>18.7446</td>
+<td>4.55668</td>
+<td>2.71016</td>
+<td>1.09371</td>
+<td>5.34064</td>
+<td>0.865847</td>
+<td>3.10023</td>
+<td>4.41822</td>
+<td>4.61817</td>
+<td>3.09154</td>
+<td>1.14697</td>
+<td>1.68891</td>
+<td>5.12395</td>
+</tr>
+<tr>
+<td>BRISK+BRIEF</td>
+<td>X</td>
+<td>1.22072</td>
+<td>1.67734</td>
+<td>3.80846</td>
+<td>2.77162</td>
+<td>0.184797</td>
+<td>7.36563</td>
+<td>24.8641</td>
+<td>0.255186</td>
+<td>6.8399</td>
+<td>4.3651</td>
+<td>0.859733</td>
+<td>2.62808</td>
+<td>2.99324</td>
+<td>0.0631959</td>
+<td>1.58202</td>
+<td>1.95072</td>
+<td>0.877484</td>
+<td>2.91457</td>
+<td>3.73455</td>
+</tr>
+<tr>
+<td>BRISK+ORB</td>
+<td>X</td>
+<td>21.5043</td>
+<td>7.90189</td>
+<td>4.17524</td>
+<td>0.950088</td>
+<td>3.77925</td>
+<td>13.8353</td>
+<td>13.5835</td>
+<td>6.48095</td>
+<td>2.21957</td>
+<td>5.2779</td>
+<td>1.92429</td>
+<td>1.05607</td>
+<td>2.49569</td>
+<td>20.6522</td>
+<td>3.76583</td>
+<td>3.99848</td>
+<td>0.0539014</td>
+<td>8.18497</td>
+<td>6.76886</td>
+</tr>
+<tr>
+<td>BRISK+FREAK</td>
+<td>X</td>
+<td>4.2</td>
+<td>5.40059</td>
+<td>8.56842</td>
+<td>5.32535</td>
+<td>6.45452</td>
+<td>5.89317</td>
+<td>24.1876</td>
+<td>4.21182</td>
+<td>2.62582</td>
+<td>1.09213</td>
+<td>3.06076</td>
+<td>1.3612</td>
+<td>5.7386</td>
+<td>0.89984</td>
+<td>5.25098</td>
+<td>2.05529</td>
+<td>0.0951737</td>
+<td>1.93944</td>
+<td>4.90893</td>
+</tr>
+<tr>
+<td>BRISK+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>BRISK+SIFT</td>
+<td>X</td>
+<td>0.131505</td>
+<td>6.99402</td>
+<td>3.93825</td>
+<td>3.528</td>
+<td>17.1859</td>
+<td>9.24908</td>
+<td>17.903</td>
+<td>2.69012</td>
+<td>1.97785</td>
+<td>2.92059</td>
+<td>1.2748</td>
+<td>0.633138</td>
+<td>2.17738</td>
+<td>0.405014</td>
+<td>3.12853</td>
+<td>4.15252</td>
+<td>0.0449207</td>
+<td>4.36878</td>
+<td>4.59464</td>
+</tr>
+<tr>
+<td>ORB+BRISK</td>
+<td>X</td>
+<td>3.49241</td>
+<td>1.75194</td>
+<td>54.4905</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>24.0434</td>
+<td>X</td>
+<td>X</td>
+<td>3.62781</td>
+<td>0.433863</td>
+<td>X</td>
+<td>X</td>
+<td>2.45929</td>
+<td>X</td>
+<td>16.8282</td>
+<td>10.3834</td>
+<td>X</td>
+<td>13.0568</td>
+</tr>
+<tr>
+<td>ORB+BRIEF</td>
+<td>X</td>
+<td>4.34948</td>
+<td>2.3618</td>
+<td>0.66988</td>
+<td>8.55181</td>
+<td>0.612064</td>
+<td>X</td>
+<td>23.3175</td>
+<td>X</td>
+<td>177.195</td>
+<td>4.55023</td>
+<td>11.2465</td>
+<td>X</td>
+<td>13.4502</td>
+<td>4.43138</td>
+<td>5.7081</td>
+<td>0.830681</td>
+<td>0.596842</td>
+<td>3.08183</td>
+<td>17.3969</td>
+</tr>
+<tr>
+<td>ORB+ORB</td>
+<td>X</td>
+<td>2.96823</td>
+<td>X</td>
+<td>6.54636</td>
+<td>X</td>
+<td>0.865878</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>3.17427</td>
+<td>X</td>
+<td>3.19084</td>
+<td>17.6809</td>
+<td>16.608</td>
+<td>13.7857</td>
+<td>15.4157</td>
+<td>16.154</td>
+<td>9.63899</td>
+</tr>
+<tr>
+<td>ORB+FREAK</td>
+<td>X</td>
+<td>3.13846</td>
+<td>26.9171</td>
+<td>7.89119</td>
+<td>X</td>
+<td>6.18924</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0.546207</td>
+<td>5.91393</td>
+<td>1.44092</td>
+<td>2.84207</td>
+<td>0.979198</td>
+<td>1.70851</td>
+<td>X</td>
+<td>1.85705</td>
+<td>X</td>
+<td>X</td>
+<td>5.40217</td>
+</tr>
+<tr>
+<td>ORB+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>ORB+SIFT</td>
+<td>X</td>
+<td>4.97319</td>
+<td>0.625381</td>
+<td>6.36806</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>9.27827</td>
+<td>X</td>
+<td>3.88453</td>
+<td>2.02212</td>
+<td>X</td>
+<td>4.07968</td>
+<td>2.26417</td>
+<td>163.889</td>
+<td>0.334184</td>
+<td>11.5638</td>
+<td>20.6071</td>
+<td>19.1575</td>
+</tr>
+<tr>
+<td>AKAZE+BRISK</td>
+<td>X</td>
+<td>0.725581</td>
+<td>1.34008</td>
+<td>5.22047</td>
+<td>1.89038</td>
+<td>0.740388</td>
+<td>4.3515</td>
+<td>17.2911</td>
+<td>5.83625</td>
+<td>0.448138</td>
+<td>2.07456</td>
+<td>3.03182</td>
+<td>1.12653</td>
+<td>0.560258</td>
+<td>2.1951</td>
+<td>2.62687</td>
+<td>1.24877</td>
+<td>1.87558</td>
+<td>0.655375</td>
+<td>2.95771</td>
+</tr>
+<tr>
+<td><strong>AKAZE+BRIEF</strong></td>
+<td>X</td>
+<td>1.35944</td>
+<td>0.101893</td>
+<td>6.08444</td>
+<td>1.73006</td>
+<td>0.693786</td>
+<td>4.25876</td>
+<td>17.9653</td>
+<td>5.2051</td>
+<td>0.191262</td>
+<td>3.32364</td>
+<td>2.23034</td>
+<td>0.234653</td>
+<td>1.98906</td>
+<td>0.415765</td>
+<td>2.24235</td>
+<td>1.18789</td>
+<td>1.00343</td>
+<td>1.05336</td>
+<td><strong>2.84836</strong></td>
+</tr>
+<tr>
+<td>AKAZE+ORB</td>
+<td>X</td>
+<td>3.24465</td>
+<td>0.398156</td>
+<td>6.05493</td>
+<td>2.74757</td>
+<td>0.44214</td>
+<td>5.63507</td>
+<td>16.5285</td>
+<td>6.20239</td>
+<td>1.04071</td>
+<td>3.20034</td>
+<td>3.62092</td>
+<td>0.445698</td>
+<td>5.14243</td>
+<td>0.824296</td>
+<td>18.0927</td>
+<td>1.6781</td>
+<td>2.20829</td>
+<td>0.142646</td>
+<td>4.31386</td>
+</tr>
+<tr>
+<td>AKAZE+FREAK</td>
+<td>X</td>
+<td>1.60488</td>
+<td>0.37184</td>
+<td>4.28819</td>
+<td>2.33714</td>
+<td>1.87655</td>
+<td>5.37314</td>
+<td>15.0652</td>
+<td>6.67965</td>
+<td>0.935732</td>
+<td>3.52711</td>
+<td>2.67224</td>
+<td>2.05508</td>
+<td>0.808534</td>
+<td>0.636561</td>
+<td>0.577554</td>
+<td>3.66673</td>
+<td>1.26181</td>
+<td>0.519318</td>
+<td>3.01429</td>
+</tr>
+<tr>
+<td>AKAZE+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>AKAZE+SIFT</td>
+<td>X</td>
+<td>1.32057</td>
+<td>1.33629</td>
+<td>5.44194</td>
+<td>1.98388</td>
+<td>0.678364</td>
+<td>6.37145</td>
+<td>17.2087</td>
+<td>5.54338</td>
+<td>0.271787</td>
+<td>3.5592</td>
+<td>2.56848</td>
+<td>0.0754724</td>
+<td>1.92104</td>
+<td>0.991467</td>
+<td>1.75704</td>
+<td>1.83376</td>
+<td>0.651131</td>
+<td>1.06608</td>
+<td>3.03222</td>
+</tr>
+<tr>
+<td><strong>SIFT+BRISK</strong></td>
+<td>X</td>
+<td>1.71636</td>
+<td>0.688634</td>
+<td>5.39736</td>
+<td>3.49589</td>
+<td>1.72576</td>
+<td>2.85987</td>
+<td>12.9826</td>
+<td>0.746807</td>
+<td>1.47881</td>
+<td>3.8043</td>
+<td>4.74801</td>
+<td>0.364058</td>
+<td>0.706815</td>
+<td>2.22213</td>
+<td>1.85756</td>
+<td>0.483048</td>
+<td>1.9039</td>
+<td>0.348449</td>
+<td><strong>2.64057</strong></td>
+</tr>
+<tr>
+<td>SIFT+BRIEF</td>
+<td>X</td>
+<td>2.04791</td>
+<td>0.724719</td>
+<td>4.75265</td>
+<td>6.89411</td>
+<td>0.39678</td>
+<td>4.43886</td>
+<td>21.3063</td>
+<td>4.68906</td>
+<td>0.65019</td>
+<td>5.81213</td>
+<td>0.297617</td>
+<td>0.0960099</td>
+<td>0.207517</td>
+<td>0.512117</td>
+<td>0.367246</td>
+<td>0.0872693</td>
+<td>2.0928</td>
+<td>2.60104</td>
+<td>3.2208</td>
+</tr>
+<tr>
+<td>SIFT+FREAK</td>
+<td>X</td>
+<td>2.5995</td>
+<td>2.55904</td>
+<td>3.69244</td>
+<td>1.57948</td>
+<td>1.11072</td>
+<td>3.56631</td>
+<td>19.0423</td>
+<td>2.21348</td>
+<td>1.13285</td>
+<td>3.50652</td>
+<td>3.08168</td>
+<td>0.236594</td>
+<td>0.749179</td>
+<td>0.0131931</td>
+<td>3.49035</td>
+<td>0.679527</td>
+<td>1.39712</td>
+<td>3.21042</td>
+<td>2.99226</td>
+</tr>
+<tr>
+<td>SIFT+AKAZE</td>
+<td>X</td>
+<td>1.34115</td>
+<td>1.36653</td>
+<td>5.18291</td>
+<td>2.1166</td>
+<td>3.92988</td>
+<td>4.13212</td>
+<td>16.5908</td>
+<td>5.00577</td>
+<td>1.71263</td>
+<td>2.35844</td>
+<td>4.32388</td>
+<td>0.584915</td>
+<td>1.39726</td>
+<td>2.81883</td>
+<td>1.60252</td>
+<td>1.2745</td>
+<td>1.44574</td>
+<td>0.636024</td>
+<td>3.21225</td>
+</tr>
+<tr>
+<td>SIFT+SIFT</td>
+<td>X</td>
+<td>3.4964</td>
+<td>2.04108</td>
+<td>5.64425</td>
+<td>3.17651</td>
+<td>0.844499</td>
+<td>3.19101</td>
+<td>19.5318</td>
+<td>4.21631</td>
+<td>0.833203</td>
+<td>4.18537</td>
+<td>1.01555</td>
+<td>0.874159</td>
+<td>1.02731</td>
+<td>0.130439</td>
+<td>1.97055</td>
+<td>2.20223</td>
+<td>1.84158</td>
+<td>0.744972</td>
+<td>3.16485</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SIFT + ORB:</strong> Out of memory error.</p>
+<ul>
+<li>Based on the results above, the following combinations provide the best mean absolute error: <strong>SHITOMASI+BRIEF, AKAZE+BRIEF and SIFT+BRISK</strong>.</li>
+<li>Some combinations take a lot of time to calculate features and matches (e.g. **HARRIS+ORB, **), so it's very challenging to apply them in real-time.</li>
+<li>Combinations based on ORB detector often fail to estimate TTC. That may be because it cannot detect enough keypoints.</li>
+</ul>
+<p><img src="images/orb.png" alt=""></p>
+<ul>
+<li>HARRIS+ORB provides not very accurate TTCs may be because it produces too many wrong keypoints and matching.</li>
+</ul>
+<p><img src="images/HARRIS_ORB.png" alt=""></p>
+
+</body>
+</html>
